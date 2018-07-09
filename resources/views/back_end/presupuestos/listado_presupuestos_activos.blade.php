@@ -45,14 +45,24 @@
                                     <td>{{ date("d/M/Y H:i:s",strtotime($listado -> fecCreaPresup))  }}</td>
                                     <td>{{ $listado -> rsocCliente }}</td>
                                     <td>{{ $listado -> telCli }} - {{ $listado -> mailCli }}</td>
-                                    <td><center>{{ $listado -> estadoPresup }}</center></td>
+                                    <td>
+                                        @if($listado -> estadoPresup == 1)
+                                            <button class="btn btn-xs btn-warning"><i class="fa fa-flag"></i> En Proceso</button>
+                                        @elseif($listado -> estadoPresup == 2)
+                                            <button class="btn btn-xs btn-primary"><i class="fa fa-flag"></i> Cerrado y esperando aprobación</button>
+                                        @elseif($listado -> estadoPresup == 3)
+                                            <button class="btn btn-xs btn-success"><i class="fa fa-flag"></i> Aprobado</button> >>>
+                                            <button class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Traspasar a Pago</button>
+                                        @endif
+                                    </td>
                                     <td>
                                         <center>
                                             <form action="/Presupuestos/VerDetalle" method="POST">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" name="idPresup"
                                                        value="{{ $listado -> idPresupuesto }}">
-                                                <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-laptop"></i>
+                                                <button type="submit" class="btn btn-danger btn-xs"><i
+                                                        class="fa fa-laptop"></i>
                                                     Ver Detalle
                                                 </button>
                                             </form>

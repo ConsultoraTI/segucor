@@ -42,6 +42,13 @@
                     <li><a href="/Presupuestos/Archivo">Archivo</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#"><i class='fa fa-money'></i> <span>Pagos</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="/Pagos/Registrar">Registrar Pago</a></li>
+                    <li><a href="/Pagos/Archivo">Archivo</a></li>
+                </ul>
+            </li>
             <li class="header">SISTEMA</li>
             <li class="treeview">
                 <a href="#"><i class='fa fa-gears'></i> <span>Opciones</span> <i class="fa fa-angle-left pull-right"></i></a>

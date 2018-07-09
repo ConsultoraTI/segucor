@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <div class="col-md-2">
                             <label>Folio Interno: (Papel)</label>
-                            <input type="text" name="FolioInt" class="form-control" placeholder="25645">
+                            <input type="text" name="FolioInt" class="form-control" placeholder="0000">
                         </div>
 
                         <div class="col-md-2">
@@ -31,9 +31,14 @@
                             <input type="text" name="RutCli" class="form-control" placeholder="00.000.000-0" required>
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <label>Razón Social:</label>
                             <input type="text" name="RSocCli" class="form-control" placeholder="Los Muermos SpA." required>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label>N° Orden Compra:</label>
+                            <input type="number" name="OrdenCompra" class="form-control" min="0" placeholder="0000">
                         </div>
                     </div>
 
@@ -45,7 +50,7 @@
 
                         <div class="col-md-3">
                             <label>Teléfono:</label>
-                            <input type="number" name="TelCli" class="form-control" placeholder="900000000" required>
+                            <input type="number" name="TelCli" class="form-control" min="0" placeholder="900000000" required>
                         </div>
 
                         <div class="col-md-4">

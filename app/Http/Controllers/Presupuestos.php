@@ -25,6 +25,7 @@ class Presupuestos extends Controller
             'giroCliente' => $request->input('GiroCli'),
             'telCli' => $request->input('TelCli'),
             'mailCli' => $request->input('MailCli'),
+            'OrdenCompra' => $request->input('OrdenCompra'),
             'obsCli' => $request->input('ObsCliPre'),
             'estadoPresup' => '1',
             'users_id' => Auth::user()->id,
@@ -58,11 +59,17 @@ class Presupuestos extends Controller
             ->first();
 
         $detalle_presupuesto = DB::table('detallepresupuestos')
-            ->where('presupuestos_idPresupuesto', $id)
+            ->where([
+                ['presupuestos_idPresupuesto', $id_presupuesto],
+                ['estadoDetProd', 1]
+            ])
             ->get();
 
         $subtotal = DB::table('detallepresupuestos')
-            ->where('presupuestos_idPresupuesto', $id)
+            ->where([
+                ['presupuestos_idPresupuesto', $id_presupuesto],
+                ['estadoDetProd', 1]
+            ])
             ->sum('subtotalProd');
 
         return view('back_end.presupuestos.detalle_presupuesto',
@@ -79,11 +86,17 @@ class Presupuestos extends Controller
             ->first();
 
         $detalle_presupuesto = DB::table('detallepresupuestos')
-            ->where('presupuestos_idPresupuesto', $id_presupuesto)
+            ->where([
+                ['presupuestos_idPresupuesto', $id_presupuesto],
+                ['estadoDetProd', 1]
+            ])
             ->get();
 
         $subtotal = DB::table('detallepresupuestos')
-            ->where('presupuestos_idPresupuesto', $id_presupuesto)
+            ->where([
+                ['presupuestos_idPresupuesto', $id_presupuesto],
+                ['estadoDetProd', 1]
+            ])
             ->sum('subtotalProd');
 
         return view('back_end.presupuestos.detalle_presupuesto',
@@ -111,10 +124,61 @@ class Presupuestos extends Controller
 
     }
 
-    public function cerrar_presupuesto(){
+    public function eliminar_linea_detalle(Request $request)
+    {
 
+        DB::table('detallepresupuestos')
+            ->where('idDetallePresup', $request->input('idLinDet'))
+            ->update(['estadoDetProd' => 2]);
 
+        $id = $request->input('id');
 
+        return redirect()->action(
+            'Presupuestos@ver_detalle_presupuesto_interno', ['id' => $id]
+        );
+
+    }
+
+    public function cerrar_presupuesto(Request $request)
+    {
+
+        DB::table('presupuestos')
+            ->where('idPresupuesto', $request->input('id'))
+            ->update(['estadoPresup' => 2]);
+
+        $id = $request->input('id');
+
+        return redirect()->action(
+            'Presupuestos@ver_detalle_presupuesto_interno', ['id' => $id]
+        );
+
+    }
+
+    public function aprobar_presupuesto(Request $request)
+    {
+        DB::table('presupuestos')
+            ->where('idPresupuesto', $request->input('id'))
+            ->update(['estadoPresup' => 3]);
+
+        $id = $request->input('id');
+
+        return redirect()->action(
+            'Presupuestos@ver_detalle_presupuesto_interno', ['id' => $id]
+        );
+    }
+
+    public function reabrir_presupuesto(Request $request)
+    {
+
+        DB::table('presupuestos')
+            ->where('idPresupuesto', $request->input('id'))
+            ->update(['estadoPresup' => 1]);
+
+        $id = $request->input('id');
+
+        return redirect()->action(
+            'Presupuestos@ver_detalle_presupuesto_interno', ['id' => $id]
+        );
     }
 
 }
